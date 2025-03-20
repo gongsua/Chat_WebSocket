@@ -1,9 +1,11 @@
 package org.example.chatproject.member.service;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.example.chatproject.member.domain.Member;
 import org.example.chatproject.member.dto.MeberSaveReqDto;
+import org.example.chatproject.member.dto.MemberLoginReqDto;
 import org.example.chatproject.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,10 @@ public class MemberService {
         Member member = memberRepository.save(newMember);
 
         return member;
+    }
+
+    public Member login(MemberLoginReqDto memberLoginReqDto) {
+        Member member = memberRepository.findByEmail(memberLoginReqDto.getEmail()).orElseThrow()->new EntityNotFoundException("존재하지 않는 이메일 입니다");
+
     }
 }

@@ -3,6 +3,7 @@ package org.example.chatproject.member.controller;
 
 import org.example.chatproject.member.domain.Member;
 import org.example.chatproject.member.dto.MeberSaveReqDto;
+import org.example.chatproject.member.dto.MemberLoginReqDto;
 import org.example.chatproject.member.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,4 +26,12 @@ public class MemberController {
         return new ResponseEntity<>(member.getId(), HttpStatus.CREATED);
     }
 
+    //엔드포인트 생성, 아이디와 패스워드가 맞으면 토큰을 생성해준다.
+    @PostMapping("/doLogin")
+    public  ResponseEntity<?> doLogin(@RequestBody MemberLoginReqDto memberLoginReqDto) {
+        //데이터베이스를 조회하고 검증하고 문제없을 경우 토큰을 발행한다
+        //email. pass 검증
+
+        Member member = memberService.login(memberLoginReqDto);
+    }
 }

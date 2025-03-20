@@ -22,7 +22,7 @@ public class Member {
     private String password;
 
 
-    //enum의 값을 슷자값으로 넣겠다. // 찾아보기!!
+    //enum의 값을 슷자값으로 넣겠다.
     @Enumerated(EnumType.STRING)
     @Builder.Default
     //입력을 안하면 Role,User 로 사용하겠다.
