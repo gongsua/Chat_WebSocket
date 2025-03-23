@@ -31,7 +31,8 @@ public class MemberController {
     public  ResponseEntity<?> doLogin(@RequestBody MemberLoginReqDto memberLoginReqDto) {
         //데이터베이스를 조회하고 검증하고 문제없을 경우 토큰을 발행한다
         //email. pass 검증
-
         Member member = memberService.login(memberLoginReqDto);
+        //일치할 경우 토큰을 발행한다
+
     }
 }

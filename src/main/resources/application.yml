@@ -12,3 +12,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+jwt:
+#양방향 암호화로 인코딩을 시킬 것이다.
+# chatserverscretaccesstokenchatserverscretaccesstokenchatserverscretaccesstoken
+  secretKey: Y2hhdHNlcnZlcnNjcmV0YWNjZXNzdG9rZW5jaGF0c2VydmVyc2NyZXRhY2Nlc3N0b2tlbmNoYXRzZXJ2ZXJzY3JldGFjY2Vzc3Rva2Vu
+  #유효기간
+  expiration: 3000
