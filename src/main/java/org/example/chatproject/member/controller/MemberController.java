@@ -1,6 +1,7 @@
 package org.example.chatproject.member.controller;
 
 
+import org.example.chatproject.common.auth.JwtTokenProvider;
 import org.example.chatproject.member.domain.Member;
 import org.example.chatproject.member.dto.MeberSaveReqDto;
 import org.example.chatproject.member.dto.MemberLoginReqDto;
@@ -12,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, JwtTokenProvider jwtTokenProvider) {
         this.memberService = memberService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
     @PostMapping("/create")  //HTTP meg랑 회원id을 리턴할 것
     public ResponseEntity<?> memberCreate(@RequestBody MeberSaveReqDto memberSaveReqDto) {
@@ -33,6 +39,14 @@ public class MemberController {
         //email. pass 검증
         Member member = memberService.login(memberLoginReqDto);
         //일치할 경우 토큰을 발행한다
+
+
+        //문자열 토큰발행
+        String jwtToken = jwtTokenProvider.createToken(member.getEmail(), member.getRole().toString());
+        Map<String, Object> loginInfo = new HashMap<>();
+        loginInfo.put("token", jwtToken);
+        loginInfo.put("id", member.getId());
+        return new ResponseEntity<>(loginInfo, HttpStatus.OK);
 
     }
 }
