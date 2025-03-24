@@ -6,10 +6,14 @@ import jakarta.transaction.Transactional;
 import org.example.chatproject.member.domain.Member;
 import org.example.chatproject.member.dto.MeberSaveReqDto;
 import org.example.chatproject.member.dto.MemberLoginReqDto;
+import org.example.chatproject.member.dto.MemerListResDto;
 import org.example.chatproject.member.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.example.chatproject.common.configs.SecurityConfigs;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -52,6 +56,19 @@ public class MemberService {
 
         }
         return member;
+    }
+
+    public List<MemerListResDto> findAll() {
+        List<Member> members = memberRepository.findAll();
+        List<MemerListResDto> dtos = new ArrayList<>();
+        for (Member member : members) {
+            MemerListResDto dto = new MemerListResDto();
+            dto.setId(member.getId());
+            dto.setName(member.getName());
+            dto.setEmail(member.getEmail());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
 }
